@@ -1,8 +1,12 @@
-import {BackgroundImage, Body, CategoryItemContainer} from './category-item.styles.jsx';
-import { useNavigate } from 'react-router-dom';
+import {
+  BackgroundImage,
+  Body,
+  CategoryItemContainer,
+} from "./category-item.styles";
+import { useNavigate } from "react-router-dom";
 
-const CategoryItem = ({category}) => {
-  const {title, imageUrl, route} = category;
+const CategoryItem = ({category}: any): JSX.Element => {
+  const { title, imageUrl, route } = category;
   const navigate = useNavigate();
 
   const onNavigateHandler = () => navigate(route);
@@ -14,7 +18,7 @@ const CategoryItem = ({category}) => {
         <p>Shop now</p>
       </Body>
     </CategoryItemContainer>
-  )
-}
+  );
+};
 
 export default CategoryItem;

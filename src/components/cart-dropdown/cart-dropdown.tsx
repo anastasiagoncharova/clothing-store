@@ -3,8 +3,8 @@ import { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import Button from "../button/button.component";
-import CartItem from "../cart-item/cart-item.component";
+import Button from "../../shared/components/button/button";
+import CartItem from "../cart-item/cart-item";
 import { selectCartItems } from "../../store/cart/cart.selector";
 
 import {

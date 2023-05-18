@@ -1,14 +1,6 @@
-import { AnyAction } from 'redux';
+import { createSlice } from "@reduxjs/toolkit";
 
-import {
-  signInSuccess,
-  signOutSuccess,
-  signInFailed,
-  signUpFailed,
-  signOutFailed,
-} from './user.action';
-
-import { UserData } from '../../utils/firebase/firebase.utils';
+import { UserData } from "../../utils/firebase/firebase.utils";
 
 export type UserState = {
   readonly currentUser: UserData | null;
@@ -22,25 +14,16 @@ const INITIAL_STATE: UserState = {
   error: null,
 };
 
-export const userReducer = (
-  state = INITIAL_STATE,
-  action = {} as AnyAction
-) => {
-  if (signInSuccess.match(action)) {
-    return { ...state, currentUser: action.payload };
-  }
+export const userSlice = createSlice({
+  name: "user",
+  initialState: INITIAL_STATE,
+  reducers: {
+    setCurrentUser(state, action) {
+      state.currentUser = action.payload;
+    },
+  },
+});
 
-  if (signOutSuccess.match(action)) {
-    return { ...state, currentUser: null };
-  }
+export const { setCurrentUser } = userSlice.actions;
 
-  if (
-    signOutFailed.match(action) ||
-    signInFailed.match(action) ||
-    signUpFailed.match(action)
-  ) {
-    return { ...state, error: action.payload };
-  }
-
-  return state;
-};
+export const userReducer = userSlice.reducer;

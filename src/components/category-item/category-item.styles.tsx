@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 
-export const BackgroundImage = styled.div`
+interface ButtonProps {
+  imageUrl: string;
+}
+
+export const BackgroundImage = styled.div.attrs((props: {imageUrl: string}) => props)`
   width: 100%;
   height: 100%;
   background-size: cover;
   background-position: center;
-  background-image: ${({ imageUrl }) => `url(${imageUrl})`};
+  background-image: ${(props) => `url(${props.imageUrl})`};
 `;
 
 export const Body = styled.div`

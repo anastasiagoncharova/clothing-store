@@ -1,11 +1,5 @@
-import { Category } from './category.types';
-
-import {
-  fetchCategoriesStart,
-  fetchCategoriesSuccess,
-  fetchCategoriesFailed,
-} from './category.action';
-import { AnyAction } from 'redux';
+import { Category } from "./category.types";
+import { createSlice } from "@reduxjs/toolkit";
 
 export type CategoriesState = {
   readonly categories: Category[];
@@ -13,27 +7,22 @@ export type CategoriesState = {
   readonly error: Error | null;
 };
 
-export const CATEGORIES_INITIAL_STATE: CategoriesState = {
+export const INITIAL_STATE: CategoriesState = {
   categories: [],
   isLoading: false,
   error: null,
 };
 
-export const categoriesReducer = (
-  state = CATEGORIES_INITIAL_STATE,
-  action = {} as AnyAction
-): CategoriesState => {
-  if (fetchCategoriesStart.match(action)) {
-    return { ...state, isLoading: true };
-  }
+export const categoriesSlice = createSlice({
+  name: "categories",
+  initialState: INITIAL_STATE,
+  reducers: {
+    setCategories(state, action) {
+      state.categories = action.payload;
+    },
+  },
+});
 
-  if (fetchCategoriesSuccess.match(action)) {
-    return { ...state, categories: action.payload, isLoading: false };
-  }
+export const { setCategories } = categoriesSlice.actions;
 
-  if (fetchCategoriesFailed.match(action)) {
-    return { ...state, error: action.payload, isLoading: false };
-  }
-
-  return state;
-};
+export const categoriesReducer = categoriesSlice.reducer;
