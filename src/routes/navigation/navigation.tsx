@@ -26,7 +26,7 @@ const Navigation = () => {
   const ref = useRef<HTMLInputElement>(null);
   const signOutUser = () => dispatch(signOutStart());
 
-  useOutsideClick(ref, () => dispatch(setIsCartOpen(!isCartOpen)));
+  useOutsideClick(ref, () => dispatch(setIsCartOpen(false)));
 
   return (
     <Fragment>

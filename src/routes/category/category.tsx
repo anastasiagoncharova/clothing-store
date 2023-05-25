@@ -11,10 +11,6 @@ import {
 
 import { CategoryContainer, Title } from "./category.styles";
 
-// type CategoryRouteParams = {
-//   category: string;
-// };
-
 const Category = () => {
   const { category }: any = useParams();
   const categoriesMap = useSelector(selectCategoriesMap);
