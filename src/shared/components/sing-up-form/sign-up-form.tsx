@@ -1,11 +1,11 @@
-import { useState, FormEvent, ChangeEvent } from "react";
+import { useState } from "react";
 import { AuthError, AuthErrorCodes } from "firebase/auth";
 import { useDispatch } from "react-redux";
+import { SubmitHandler, useForm } from 'react-hook-form';
 
-import FormInput from "../form-input/form-input";
 import Button from "../button/button";
 
-import { SignUpContainer } from "./sign-up-form.styles";
+import { SignUpContainer, FormInputLabel, Input, Group } from "./sign-up-form.styles";
 import { signUpStart } from "../../../store/user/user.action";
 
 const defaultFormFields = {
@@ -15,18 +15,24 @@ const defaultFormFields = {
   confirmPassword: "",
 };
 
+type Inputs = {
+  displayName: string,
+  email: string,
+  password: string,
+  confirmPassword: string
+};
+
 const SignUpForm = () => {
-  const [formFields, setFormFields] = useState(defaultFormFields);
-  const { displayName, email, password, confirmPassword } = formFields;
+  const { register, handleSubmit } = useForm<Inputs>();
+  const [_formFields, setFormFields] = useState(defaultFormFields);
   const dispatch = useDispatch();
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const onSubmit: SubmitHandler<Inputs> = data => {
+    const {email, password, displayName, confirmPassword} = data;
     if (password !== confirmPassword) {
       alert("passwords do not match");
       return;
@@ -44,52 +50,39 @@ const SignUpForm = () => {
     }
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-
-    setFormFields({ ...formFields, [name]: value });
-  };
-
   return (
     <SignUpContainer>
       <h2>Don't have an account?</h2>
       <span>Sign up with your email and password</span>
-      <form onSubmit={handleSubmit}>
-        <FormInput
-          label="Display Name"
-          type="text"
-          required
-          onChange={handleChange}
-          name="displayName"
-          value={displayName}
-        />
-
-        <FormInput
-          label="Email"
-          type="email"
-          required
-          onChange={handleChange}
-          name="email"
-          value={email}
-        />
-
-        <FormInput
-          label="Password"
-          type="password"
-          required
-          onChange={handleChange}
-          name="password"
-          value={password}
-        />
-
-        <FormInput
-          label="Confirm Password"
-          type="password"
-          required
-          onChange={handleChange}
-          name="confirmPassword"
-          value={confirmPassword}
-        />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Group>
+            <Input
+              type="text"
+              required
+              {...register('displayName')} />
+            <FormInputLabel>Display Name</FormInputLabel>
+          </Group>
+          <Group>
+            <Input
+              type="email"
+              required
+              {...register('email', { pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/ })} />
+            <FormInputLabel>Email</FormInputLabel>
+          </Group>
+          <Group>
+            <Input
+              type="password"
+              required
+              {...register('password')} />
+            <FormInputLabel>Password</FormInputLabel>
+          </Group>
+          <Group>
+            <Input
+              type="password"
+              required
+              {...register('confirmPassword')} />
+            <FormInputLabel>Confirm Password</FormInputLabel>
+          </Group>
         <Button type="submit">Sign Up</Button>
       </form>
     </SignUpContainer>

@@ -1,10 +1,9 @@
-import { useState, FormEvent, ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
-import FormInput from "../form-input/form-input";
+import { SubmitHandler, useForm } from 'react-hook-form';
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button";
 
-import { SignInContainer, ButtonsContainer } from "./sign-in-form.styles";
+import { SignInContainer, ButtonsContainer, FormInputLabel, Input, Group } from "./sign-in-form.styles";
 import {
   googleSignInStart,
   emailSignInStart,
@@ -15,7 +14,13 @@ const defaultFormFields = {
   password: "",
 };
 
+type Inputs = {
+  email: string,
+  password: string,
+};
+
 const SignInForm = () => {
+  const { register, handleSubmit } = useForm<Inputs>();
   const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
@@ -28,9 +33,8 @@ const SignInForm = () => {
     dispatch(googleSignInStart());
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const onSubmit: SubmitHandler<Inputs> = data => {
+    const {email, password} = data;
     try {
       dispatch(emailSignInStart(email, password));
       resetFormFields();
@@ -39,34 +43,25 @@ const SignInForm = () => {
     }
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-
-    setFormFields({ ...formFields, [name]: value });
-  };
-
   return (
     <SignInContainer>
       <h2>Already have an account?</h2>
       <span>Sign in with your email and password</span>
-      <form onSubmit={handleSubmit}>
-        <FormInput
-          label="Email"
-          type="email"
-          required
-          onChange={handleChange}
-          name="email"
-          value={email}
-        />
-
-        <FormInput
-          label="Password"
-          type="password"
-          required
-          onChange={handleChange}
-          name="password"
-          value={password}
-        />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Group>
+          <Input
+            type="email"
+            required
+            {...register('email', { pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/ })} />
+          <FormInputLabel>Email</FormInputLabel>
+        </Group>
+        <Group>
+          <Input
+            type="password"
+            required
+            {...register('password')} />
+          <FormInputLabel>Password</FormInputLabel>
+        </Group>
         <ButtonsContainer>
           <Button type="submit">Sign In</Button>
           <Button
