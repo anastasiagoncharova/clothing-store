@@ -1,17 +1,35 @@
-import { Routes, Route } from "react-router-dom";
-import Home from "./routes/home/home";
-import Navigation from "./routes/navigation/navigation";
-import Authentication from "./routes/authentication/authentication";
-import Shop from "./routes/shop/shop";
-import Checkout from "./routes/checkout/checkout";
-import { useEffect } from "react";
-import { checkUserSession } from "./store/user/user.action";
-import { useDispatch } from "react-redux";
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { Routes, Route } from 'react-router-dom';
+
+import {
+  onAuthStateChangedListener,
+  createUserDocumentFromAuth,
+} from './utils/firebase/firebase.utils';
+import Home from './routes/home/home';
+import Navigation from './routes/navigation/navigation';
+import Authentication from './routes/authentication/authentication';
+import Shop from './routes/shop/shop';
+import Checkout from './routes/checkout/checkout';
+import { setCurrentUser } from './store/user/user.reducer';
 
 const App = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(checkUserSession());
+    const unsubscribe = onAuthStateChangedListener((user) => {
+      if (user) {
+        createUserDocumentFromAuth(user);
+      }
+      const pickedUser =
+        user && (({ accessToken, email }) => ({ accessToken, email }))(user);
+
+      console.log(setCurrentUser(pickedUser));
+      dispatch(setCurrentUser(pickedUser));
+    });
+
+    return unsubscribe;
   }, []);
   return (
     <Routes>

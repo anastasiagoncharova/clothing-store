@@ -6,10 +6,9 @@ import CartDropdown from "../../components/cart-dropdown/cart-dropdown";
 
 import { selectIsCartOpen } from "../../store/cart/cart.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
-import { signOutStart } from "../../store/user/user.action";
 import useOutsideClick from "./../../hooks/clickOutside";
 import { setIsCartOpen } from "../../store/cart/cart.reducer";
-
+import { signOutUser } from '../../utils/firebase/firebase.utils';
 import { ReactComponent as CrwnLogo } from "../../assets/crown.svg";
 
 import {
@@ -24,10 +23,9 @@ const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser);
   const isCartOpen = useSelector(selectIsCartOpen);
   const ref = useRef<HTMLInputElement>(null);
-  const signOutUser = () => dispatch(signOutStart());
 
   useOutsideClick(ref, () => dispatch(setIsCartOpen(false)));
-
+  console.log(currentUser);
   return (
     <Fragment>
       <NavigationContainer>

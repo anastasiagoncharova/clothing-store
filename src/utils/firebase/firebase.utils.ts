@@ -103,8 +103,12 @@ export type UserData = {
   email: string;
 };
 
+export type CurrentUser = User & {
+  accessToken?: string;
+}
+
 export const createUserDocumentFromAuth = async (
-  userAuth: User,
+  userAuth: CurrentUser,
   additionalInformation: AdditionalInformation = {} as AdditionalInformation
 ): Promise<QueryDocumentSnapshot<UserData> | void> => {
   if (!userAuth) return;
@@ -152,10 +156,10 @@ export const signInAuthUserWithEmailAndPassword = async (
 
 export const signOutUser = async (): Promise<void> => await signOut(auth);
 
-export const onAuthStateChangedListener = (callback: NextOrObserver<User>) =>
+export const onAuthStateChangedListener = (callback: NextOrObserver<CurrentUser>) =>
   onAuthStateChanged(auth, callback);
 
-export const getCurrentUser = (): Promise<User | null> => {
+export const getCurrentUser = (): Promise<CurrentUser | null> => {
   return new Promise((resolve, reject) => {
     const unsubscribe = onAuthStateChanged(
       auth,
