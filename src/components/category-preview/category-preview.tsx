@@ -1,19 +1,20 @@
 import { InputHTMLAttributes, FC } from 'react';
-import { Link } from "react-router-dom";
-import "./category-preview.styles.scss";
+import Link from 'next/link';
+import styles from "./category-preview.module.scss";
 import { CategoryItem } from "../../store/categories/category.types";
 import ProductCard from "../product-card/product-card";
+
 type CategoryPreviewProps = { title: string, products: CategoryItem[] } & InputHTMLAttributes<HTMLInputElement>;
 
 const CategoryPreview: FC<CategoryPreviewProps> = ({title, products}) => {
   return (
-    <div className="category-preview-container">
+    <div className={styles.categoryPreviewContainer}>
       <h2>
-        <Link className="title" to={title}>
+        <Link className={styles.title} href={title}>
           {title.toUpperCase()}
         </Link>
       </h2>
-      <div className="preview">
+      <div className={styles.preview}>
         {products
           .filter((_: any, idx: number) => idx < 4)
           .map((product: any) => (

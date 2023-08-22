@@ -1,9 +1,9 @@
-import "./product-card.styles.scss";
-import Button, {
+import CommonButton, {
   BUTTON_TYPE_CLASSES,
 } from "../../shared/components/button/button";
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../store/cart/cart.reducer";
+import styles from "./product-card.module.scss";
 
 const ProductCard = ({product}: any) => {
   const { name, price, imageUrl } = product;
@@ -11,18 +11,18 @@ const ProductCard = ({product}: any) => {
   const addProductToCart = () => dispatch(addItemToCart(product));
 
   return (
-    <div className="product-card-container">
-      <img src={imageUrl} alt={`${name}`} />
-      <div className="footer">
-        <div className="name">{name}</div>
-        <div className="price">{price}</div>
+    <div className={styles.productCardContainer}>
+      <img className={styles.image} src={imageUrl} alt={`${name}`} />
+      <div className={styles.footer}>
+        <div className={styles.name}>{name}</div>
+        <div className={styles.price}>{price}</div>
       </div>
-      <Button
+      <CommonButton className={styles.productCardButton}
         buttonType={BUTTON_TYPE_CLASSES.inverted}
         onClick={addProductToCart}
       >
         Add to card
-      </Button>
+      </CommonButton>
     </div>
   );
 };

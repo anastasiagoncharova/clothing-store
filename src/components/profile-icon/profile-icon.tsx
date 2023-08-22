@@ -5,9 +5,9 @@ import {
 } from "../../store/profile/profile.selector";
 import { setIsProfileOpen } from "../../store/profile/profile.reducer";
 
-import { ReactComponent as UserIcon } from "../../assets/profile-icon.svg";
+import UserIcon from '../icons/User';
 
-import { ProfileIconContainer } from "./profile-icon.styles";
+import styles from "./profile-icon.module.scss";
 
 const ProfileIcon = () => {
   const dispatch = useDispatch();
@@ -17,9 +17,9 @@ const ProfileIcon = () => {
   const toggleIsProfileOpen = () => dispatch(setIsProfileOpen(!isProfileOpen));
 
   return (
-    <ProfileIconContainer onClick={toggleIsProfileOpen}>
+    <div className={styles.ProfileIconContainer} onClick={toggleIsProfileOpen}>
       <UserIcon/>
-    </ProfileIconContainer>
+    </div>
   );
 };
 

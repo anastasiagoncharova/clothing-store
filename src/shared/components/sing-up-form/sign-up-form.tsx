@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import Button from "../button/button";
+import CommonButton from "../button/button";
 
-import { SignUpContainer, FormInputLabel, Input, Group } from "./sign-up-form.styles";
+import styles from "./sign-up-form.module.scss";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
@@ -56,41 +56,41 @@ const SignUpForm = () => {
   };
 
   return (
-    <SignUpContainer>
+    <div className={styles.SignUpContainer}>
       <h2>Don't have an account?</h2>
       <span>Sign up with your email and password</span>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Group>
-            <Input
+        <div className={styles.Group}>
+            <input className={styles.Input}
               type="text"
               required
               {...register('displayName')} />
-            <FormInputLabel>Display Name</FormInputLabel>
-          </Group>
-          <Group>
-            <Input
+            <div className={styles.FormInputLabel}>Display Name</div>
+          </div>
+          <div className={styles.Group}>
+            <input className={styles.Input}
               type="email"
               required
               {...register('email', { pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/ })} />
-            <FormInputLabel>Email</FormInputLabel>
-          </Group>
-          <Group>
-            <Input
+            <div className={styles.FormInputLabel}>Email</div>
+          </div>
+          <div className={styles.Group}>
+            <input className={styles.Input}
               type="password"
               required
               {...register('password')} />
-            <FormInputLabel>Password</FormInputLabel>
-          </Group>
-          <Group>
-            <Input
+            <div className={styles.FormInputLabel}>Password</div>
+          </div>
+          <div className={styles.Group}>
+            <input className={styles.Input}
               type="password"
               required
               {...register('confirmPassword')} />
-            <FormInputLabel>Confirm Password</FormInputLabel>
-          </Group>
-        <Button type="submit">Sign Up</Button>
+            <div className={styles.FormInputLabel}>Confirm Password</div>
+          </div>
+        <CommonButton type="submit">Sign Up</CommonButton>
       </form>
-    </SignUpContainer>
+    </div>
   );
 };
 

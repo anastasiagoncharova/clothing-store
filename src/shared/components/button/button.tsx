@@ -1,23 +1,18 @@
 import { FC, ButtonHTMLAttributes } from 'react';
-
-import {
-  BaseButton,
-  GoogleSignInButton,
-  InvertedButton,
-  ButtonSpinner,
-} from './button.styles';
+import { Button } from '@mui/material';
+import styles from './button.module.scss';
 
 export enum BUTTON_TYPE_CLASSES {
-  base = 'base',
-  google = 'google-sign-in',
-  inverted = 'inverted',
+  base = 'BaseButton',
+  google = 'GoogleSignInButton',
+  inverted = 'InvertedButton',
 }
 
-const getButton = (buttonType = BUTTON_TYPE_CLASSES.base): typeof BaseButton =>
+const getButton = (buttonType = BUTTON_TYPE_CLASSES.base): typeof styles.BaseButton =>
   ({
-    [BUTTON_TYPE_CLASSES.base]: BaseButton,
-    [BUTTON_TYPE_CLASSES.google]: GoogleSignInButton,
-    [BUTTON_TYPE_CLASSES.inverted]: InvertedButton,
+    [BUTTON_TYPE_CLASSES.base]: styles.BaseButton,
+    [BUTTON_TYPE_CLASSES.google]: styles.GoogleSignInButton,
+    [BUTTON_TYPE_CLASSES.inverted]: styles.InvertedButton,
   }[buttonType]);
 
 export type ButtonProps = {
@@ -25,18 +20,17 @@ export type ButtonProps = {
   isLoading?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button: FC<ButtonProps> = ({
+const CommonButton: FC<ButtonProps> = ({
   children,
   buttonType,
-  isLoading,
-  ...otherProps
+  isLoading
 }) => {
   const CustomButton = getButton(buttonType);
   return (
-    <CustomButton disabled={isLoading} {...otherProps}>
-      {isLoading ? <ButtonSpinner /> : children}
-    </CustomButton>
+    <Button className={buttonType}>
+      {isLoading ? <div className={styles.ButtonSpinner} /> : children}
+    </Button>
   );
 };
 
-export default Button;
+export default CommonButton;

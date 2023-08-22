@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { SubmitHandler, useForm } from 'react-hook-form';
-import Button, { BUTTON_TYPE_CLASSES } from "../button/button";
-import { useNavigate } from "react-router-dom";
-import { SignInContainer, ButtonsContainer, FormInputLabel, Input, Group } from "./sign-in-form.styles";
+import CommonButton, { BUTTON_TYPE_CLASSES } from "../button/button";
+import { useRouter } from 'next/navigation';
+import styles from "./sign-in-form.module.scss";
 import {
   signInAuthUserWithEmailAndPassword,
   signInWithGooglePopup,
@@ -21,7 +21,7 @@ type Inputs = {
 const SignInForm = () => {
   const { register, handleSubmit } = useForm<Inputs>();
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const navigate = useNavigate();
+  const router = useRouter();
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
@@ -35,43 +35,43 @@ const SignInForm = () => {
     try {
       await signInAuthUserWithEmailAndPassword(email, password);
       resetFormFields();
-      navigate("/");
+      router.push('/');
     } catch (error) {
       console.log('user sign in failed', error);
     }
   }
 
   return (
-    <SignInContainer>
+    <div className={styles.SignInContainer}>
       <h2>Already have an account?</h2>
       <span>Sign in with your email and password</span>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Group>
-          <Input
+        <div className={styles.Group}>
+          <input className={styles.Input}
             type="email"
             required
             {...register('email', { pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/ })} />
-          <FormInputLabel>Email</FormInputLabel>
-        </Group>
-        <Group>
-          <Input
+          <div className={styles.FormInputLabel}>Email</div>
+        </div>
+        <div className={styles.Group}>
+          <input className={styles.Input}
             type="password"
             required
             {...register('password')} />
-          <FormInputLabel>Password</FormInputLabel>
-        </Group>
-        <ButtonsContainer>
-          <Button type="submit">Sign In</Button>
-          <Button
+          <div className={styles.FormInputLabel}>Password</div>
+        </div>
+        <div className={styles.ButtonsContainer}>
+          <CommonButton type="submit">Sign In</CommonButton>
+          <CommonButton
             buttonType={BUTTON_TYPE_CLASSES.google}
             type="button"
             onClick={signInWithGoogle}
           >
             Sign In With Google
-          </Button>
-        </ButtonsContainer>
+          </CommonButton>
+        </div>
       </form>
-    </SignInContainer>
+    </div>
   );
 };
 
