@@ -12,7 +12,7 @@ const CategoryItem = ({ category }: any): JSX.Element => {
         <div
           className={styles.BackgroundImage}
           style={{
-            backgroundImage: `url(${imageUrl})`,
+            backgroundImage: `url("${imageUrl}")`,
           }}
         ></div>
         <div className={styles.Body}>
