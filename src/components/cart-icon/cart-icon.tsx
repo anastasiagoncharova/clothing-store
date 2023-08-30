@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-
+import Image from 'next/image';
 import {
   selectCartCount,
   selectIsCartOpen,
 } from "../../store/cart/cart.selector";
 import { setIsCartOpen } from "../../store/cart/cart.reducer";
 
-import ShoppingIcon from '../icons/Shopping';
+import ShoppingIcon from '../../assets/shopping-bag.svg';
 
 import styles from "./cart-icon.module.scss";
 
@@ -20,7 +20,7 @@ const CartIcon = () => {
 
   return (
     <div className={styles.CartIconContainer} onClick={toggleIsCartOpen}>
-      <ShoppingIcon/>
+      <Image src={ShoppingIcon} alt="logo" width="25" height="25" />
       <div className={styles.ItemCount}>{cartCount}</div>
     </div>
   );

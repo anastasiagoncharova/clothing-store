@@ -4,8 +4,8 @@ import {
   selectIsProfileOpen,
 } from "../../store/profile/profile.selector";
 import { setIsProfileOpen } from "../../store/profile/profile.reducer";
-
-import UserIcon from '../icons/User';
+import Image from 'next/image';
+import UserIcon from '../../assets/profile-icon.svg';
 
 import styles from "./profile-icon.module.scss";
 
@@ -18,7 +18,7 @@ const ProfileIcon = () => {
 
   return (
     <div className={styles.ProfileIconContainer} onClick={toggleIsProfileOpen}>
-      <UserIcon/>
+      <Image src={UserIcon} alt="logo" width="30" height="30" />
     </div>
   );
 };

@@ -1,9 +1,8 @@
-import CategoriesPreview from "../categories-preview";
+import CategoriesPreview from "./categories-preview";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setCategories } from "../../store/categories/category.reducer";
 import { getCategoriesAndDocuments } from "../../utils/firebase/firebase.utils";
-import styles from './shop.module.scss';
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -23,10 +22,6 @@ const Shop = () => {
 
   return (
     <CategoriesPreview />
-    // <Routes>
-    //   <Route index element={<CategoriesPreview />} />
-    //   <Route path=":category" element={<Category />} />
-    // </Routes>
   );
 };
 

@@ -21,21 +21,6 @@ const Navigation = dynamic(
 );
 
 export default function App({ Component, pageProps }: AppProps) {
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChangedListener((user) => {
-  //     if (user) {
-  //       createUserDocumentFromAuth(user);
-  //     }
-  //     const pickedUser =
-  //       user && (({ accessToken, email }) => ({ accessToken, email }))(user);
-
-  //     dispatch(setCurrentUser(pickedUser));
-  //   });
-
-  //   return unsubscribe;
-  // }, []);
   return (
     <Provider store={store}>
       <Elements stripe={stripePromise}>

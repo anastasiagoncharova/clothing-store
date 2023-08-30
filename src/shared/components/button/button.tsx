@@ -8,13 +8,6 @@ export enum BUTTON_TYPE_CLASSES {
   inverted = 'InvertedButton',
 }
 
-const getButton = (buttonType = BUTTON_TYPE_CLASSES.base): typeof styles.BaseButton =>
-  ({
-    [BUTTON_TYPE_CLASSES.base]: styles.BaseButton,
-    [BUTTON_TYPE_CLASSES.google]: styles.GoogleSignInButton,
-    [BUTTON_TYPE_CLASSES.inverted]: styles.InvertedButton,
-  }[buttonType]);
-
 export type ButtonProps = {
   buttonType?: BUTTON_TYPE_CLASSES;
   isLoading?: boolean;
@@ -25,9 +18,8 @@ const CommonButton: FC<ButtonProps> = ({
   buttonType,
   isLoading
 }) => {
-  const CustomButton = getButton(buttonType);
   return (
-    <Button className={buttonType}>
+    <Button className={styles[`${buttonType}`]}>
       {isLoading ? <div className={styles.ButtonSpinner} /> : children}
     </Button>
   );
